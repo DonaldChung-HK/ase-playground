@@ -85,22 +85,22 @@ class Dftb(FileIOCalculator):
             An external point charge potential (for QM/MM calculations)
         """
 
-        if slako_dir is None:
-            slako_dir = os.environ.get('DFTB_PREFIX', './')
-            if not slako_dir.endswith('/'):
-                slako_dir += '/'
+        # if slako_dir is None:
+        #     slako_dir = os.environ.get('DFTB_PREFIX', './')
+        #     if not slako_dir.endswith('/'):
+        #         slako_dir += '/'
 
-        self.slako_dir = slako_dir
+        # self.slako_dir = slako_dir
 
-        self.default_parameters = dict(
-            Hamiltonian_='DFTB',
-            Hamiltonian_SlaterKosterFiles_='Type2FileNames',
-            Hamiltonian_SlaterKosterFiles_Prefix=self.slako_dir,
-            Hamiltonian_SlaterKosterFiles_Separator='"-"',
-            Hamiltonian_SlaterKosterFiles_Suffix='".skf"',
-            Hamiltonian_MaxAngularMomentum_='',
-            Options_='',
-            Options_WriteResultsTag='Yes')
+        # self.default_parameters = dict(
+        #     Hamiltonian_='DFTB',
+        #     Hamiltonian_SlaterKosterFiles_='Type2FileNames',
+        #     Hamiltonian_SlaterKosterFiles_Prefix=self.slako_dir,
+        #     Hamiltonian_SlaterKosterFiles_Separator='"-"',
+        #     Hamiltonian_SlaterKosterFiles_Suffix='".skf"',
+        #     Hamiltonian_MaxAngularMomentum_='',
+        #     Options_='',
+        #     Options_WriteResultsTag='Yes')
 
         self.pcpot = None
         self.lines = None
@@ -192,19 +192,19 @@ class Dftb(FileIOCalculator):
 
         params = self.parameters.copy()
 
-        s = 'Hamiltonian_MaxAngularMomentum_'
-        for key in params:
-            if key.startswith(s) and len(key) > len(s):
-                break
-        else:
-            # User didn't specify max angular mometa.  Get them from
-            # the .skf files:
-            symbols = set(self.atoms.get_chemical_symbols())
-            for symbol in symbols:
-                path = os.path.join(self.slako_dir,
-                                    '{0}-{0}.skf'.format(symbol))
-                l = read_max_angular_momentum(path)
-                params[s + symbol] = '"{}"'.format('spdf'[l])
+        # s = 'Hamiltonian_MaxAngularMomentum_'
+        # for key in params:
+        #     if key.startswith(s) and len(key) > len(s):
+        #         break
+        # else:
+        #     # User didn't specify max angular mometa.  Get them from
+        #     # the .skf files:
+        #     symbols = set(self.atoms.get_chemical_symbols())
+        #     for symbol in symbols:
+        #         path = os.path.join(self.slako_dir,
+        #                             '{0}-{0}.skf'.format(symbol))
+        #         l = read_max_angular_momentum(path)
+        #         params[s + symbol] = '"{}"'.format('spdf'[l])
 
         # --------MAIN KEYWORDS-------
         previous_key = 'dummy_'
